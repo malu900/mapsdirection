@@ -17,6 +17,7 @@ public class SeleniumConfig {
 
     public SeleniumConfig() {
         ChromeOptions options = new ChromeOptions();
+        options.setBinary("/home/maluvdberg/Documents/fhict/repo/fun4/locationbased/maps/chromedriver");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
