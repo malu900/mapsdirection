@@ -18,8 +18,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ContextConfiguration(classes = ApplicationContext.class)
+@SpringBootTest(classes = ApplicationContext.class)
 @PropertySource(value= "classpath:application.properties")
 public class SignupTests {
     private static SeleniumSignup seleniumSignup;

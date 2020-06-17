@@ -15,8 +15,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ContextConfiguration(classes = ApplicationContext.class)
+@SpringBootTest(classes = ApplicationContext.class)
 @PropertySource(value= "classpath:application.properties")
 public class NotSignedUpTests {
 
