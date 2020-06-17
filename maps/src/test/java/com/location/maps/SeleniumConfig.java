@@ -19,7 +19,6 @@ public class SeleniumConfig {
 
     public SeleniumConfig() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
