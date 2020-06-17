@@ -13,6 +13,9 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = ApplicationContext.class)
@@ -26,6 +29,8 @@ public class NotSignedUpTests {
     @BeforeAll
     public static void setUp() {
         System.out.println("Before all test methods");
+        String cwd = System.getProperty("user.dir") + "chromedriver";
+        System.out.println(cwd + "--------------------------------------------------------------------------------");
         signup = new SeleniumSignup();
     }
 
