@@ -24,9 +24,9 @@ public class SeleniumConfig {
     }
 
     static {
-        File file = new File("/home/maluvdberg/Documents/fhict/repo/fun4/locationbased/maps/chromedriver");
-        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
-//        System.setProperty("webdriver.chrome.driver", "chromedriver");
+//        File file = new File("/home/maluvdberg/Documents/fhict/repo/fun4/locationbased/maps/chromedriver");
+//        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+        System.setProperty("webdriver.chrome.driver", "chromedriver");
     }
 
     public WebDriver getDriver() {
