@@ -13,7 +13,7 @@ node {
      sh "docker version"
    }
    stage('Checkout') {
-        git 'https://github.com/malu900/directionapplication.git'
+        git 'https://github.com/malu900/mapsdirection.git'
    }
 
    // stage('Build Docker Image') {
