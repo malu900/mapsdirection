@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import org.springframework.context.annotation.Configuration;
+
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 
@@ -17,13 +19,14 @@ public class SeleniumConfig {
 
     public SeleniumConfig() {
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("/home/maluvdberg/Documents/fhict/repo/fun4/locationbased/maps/chromedriver");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     static {
-        System.setProperty("webdriver.chrome.driver", "chromedriver");
+        File file = new File("/home/maluvdberg/Documents/fhict/repo/fun4/locationbased/maps/chromedriver");
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+//        System.setProperty("webdriver.chrome.driver", "chromedriver");
     }
 
     public WebDriver getDriver() {
