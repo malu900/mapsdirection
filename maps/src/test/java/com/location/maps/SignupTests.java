@@ -18,10 +18,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(
-        classes = ApplicationContext.class
-)
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
+@SpringBootTest
 @ContextConfiguration(classes = ApplicationContext.class)
 @PropertySource(value= "classpath:application.properties")
 public class SignupTests {

@@ -11,9 +11,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(
-        classes = ApplicationContext.class)
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
+@SpringBootTest
 @ContextConfiguration(classes = ApplicationContext.class)
 @PropertySource(value= "classpath:application.properties")
 class MapsApplicationTests {
