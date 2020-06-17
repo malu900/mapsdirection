@@ -25,7 +25,7 @@ public class SeleniumConfig {
 
     static {
         String cwd = System.getProperty("user.dir") + "/chromedriver";
-        System.setProperty("webdriver.chrome.driver", cwd);
+        System.setProperty("webdriver.chrome.driver", "/var/jenkins_home/workspace/pipeline-master/./maps/chromedriver");
     }
 
     public WebDriver getDriver() {
