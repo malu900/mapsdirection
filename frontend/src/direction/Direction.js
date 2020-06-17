@@ -89,7 +89,6 @@ export class Direction extends Component {
                         </div>
                     </Card.Body>        
                     <Card.Footer>
-                    <p>{this.state.createdDate}</p>
                     <Link to={"/users/" + this.state.creator.username} className="btn btn-primary">{this.state.creator.username}</Link>
                     </Card.Footer>         
                     <Button onClick={() => this.createUserDirectionsHandle(this.state.creator.username, this.state.id)}></Button>   
