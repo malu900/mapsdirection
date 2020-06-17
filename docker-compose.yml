@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins-docker
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "8040:8080"
+    volumes:
+      - /var/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=location_db
+      - MYSQL_USER=app_user
+      - MYSQL_PASSWORD=test123
+    volumes:
+      - /home/var/lib/data:/var/lib/mysql
+    ports:
+      - "3312:3312"
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_NICE
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root123--execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
+  app-server:
+    image: maluvdb/location-api
+    container_name: locationapp
+    restart: always
+    build:
+      context: ./maps/
+      dockerfile: ./Dockerfile
+    volumes:
+      - /data/locationapp
+    ports:
+      - "8090:8080"
+    environment:
+    - DATABASE_HOST=db
+    - DATABASE_USER=app_user
+    - DATABASE_PASSWORD=test123
+    - DATABASE_NAME=location_db
+    - DATABASE_PORT=3312
+  app-client:
+    image: maluvdb/frontend
+    container_name: locationreact
+    stdin_open: true
+    restart: always
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    volumes: 
+      - ./frontend:/var/app
+      - /var/app/node_modules
