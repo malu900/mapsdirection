@@ -19,13 +19,14 @@ public class SeleniumConfig {
 
     public SeleniumConfig() {
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("headless");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     static {
         String cwd = System.getProperty("user.dir") + "/chromedriver";
-        System.setProperty("webdriver.chrome.driver", "/var/jenkins_home/workspace/pipeline-master/./maps/chromedriver");
+        System.setProperty("webdriver.chrome.driver", cwd);
     }
 
     public WebDriver getDriver() {
