@@ -41,7 +41,7 @@ node {
       echo '***********-----------------------------------------------------END TESTS-----------------------------------------------------***********'
    }
    stage('Results') {
-      archiveArtifacts 'directionsapp/target/*.jar'
+      archiveArtifacts 'maps/target/*.jar'
       junit allowEmptyResults: true, testResults: '**/target/surefire-reports/TEST-*.xml'
    }
 
