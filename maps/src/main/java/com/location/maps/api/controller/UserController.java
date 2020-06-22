@@ -1,38 +1,57 @@
 package com.location.maps.api.controller;
 
-import com.location.maps.api.payload.DirectionResponse;
+import com.location.maps.api.payload.UserIdentityAvailability;
 import com.location.maps.api.payload.UserProfile;
 import com.location.maps.api.payload.UserSummary;
-import com.location.maps.model.Direction;
+import com.location.maps.exception.ResourceNotFoundException;
 import com.location.maps.model.User;
+import com.location.maps.respository.UserRepository;
 import com.location.maps.security.CurrentUser;
 import com.location.maps.security.UserPrincipal;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
-
-
 @RestController
-public interface UserController {
+@RequestMapping("/api")
+public class UserController {
 
+    @Autowired
+    private UserRepository userRepository;
+
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
-    UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser);
-//    @CrossOrigin
+    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
+        return userSummary;
+    }
+
+    @GetMapping("/user/checkUsernameAvailability")
+    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
+        Boolean isAvailable = !userRepository.existsByUsername(username);
+        return new UserIdentityAvailability(isAvailable);
+    }
+
+    @GetMapping("/user/checkEmailAvailability")
+    public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
+        Boolean isAvailable = !userRepository.existsByEmail(email);
+        return new UserIdentityAvailability(isAvailable);
+    }
+
     @GetMapping("/users/{username}")
-    UserProfile getUserProfile(@PathVariable(value = "username") String username);
+    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-    @GetMapping("/users/{username}/directions")
-    ResponseEntity<List<DirectionResponse>> getCreatedDirections(@PathVariable(value = "username") String username);
-//
-    @GetMapping("/users/{username}/directions/favorites/")
-    ResponseEntity<List<DirectionResponse>> getFavoriteDirections(@PathVariable(value = "username") String username);
 
-    @GetMapping(value ="/users/{username}/directions/{id}")
-    ResponseEntity<?> createFavoriteDirections(@CurrentUser UserPrincipal userPrincipal, @PathVariable(value="username") String username, @PathVariable(value="id") Long id);
+        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName());
+
+        return userProfile;
+    }
+
 }

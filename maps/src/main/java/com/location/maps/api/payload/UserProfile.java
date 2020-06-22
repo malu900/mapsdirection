@@ -1,26 +1,17 @@
 package com.location.maps.api.payload;
 
-
-import java.util.List;
+import java.time.Instant;
 
 public class UserProfile {
     private Long id;
     private String username;
     private String name;
-    private Long directionCount;
-    private List<DirectionResponse> directionResponses;
 
     public UserProfile(Long id, String username, String name) {
         this.id = id;
         this.username = username;
         this.name = name;
-    }
 
-    public UserProfile(Long id, String username, String name, Long directionCount) {
-        this.id = id;
-        this.username = username;
-        this.name = name;
-        this.setDirectionCount(directionCount);
     }
 
     public Long getId() {
@@ -43,19 +34,4 @@ public class UserProfile {
         return name;
     }
 
-    public Long getDirectionCount() {
-        return directionCount;
-    }
-
-    public void setDirectionCount(Long directionCount) {
-        this.directionCount = directionCount;
-    }
-
-    public List<DirectionResponse> getDirectionResponses() {
-        return directionResponses;
-    }
-
-    public void setDirectionResponses(List<DirectionResponse> directionResponses) {
-        this.directionResponses = directionResponses;
-    }
 }

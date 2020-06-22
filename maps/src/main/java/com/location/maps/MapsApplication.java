@@ -1,10 +1,5 @@
 package com.location.maps;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -31,7 +26,6 @@ public class MapsApplication {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 	public static void main(String[] args) {
-
 		SpringApplication.run(MapsApplication.class, args);
 	}
 

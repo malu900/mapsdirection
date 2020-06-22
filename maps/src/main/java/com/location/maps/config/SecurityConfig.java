@@ -1,10 +1,11 @@
 package com.location.maps.config;
 
-import com.location.maps.service.CustomUserDetailsService;
+import com.location.maps.security.CustomUserDetailsService;
 import com.location.maps.security.JwtAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import com.location.maps.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,23 +32,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         //  It enables more complex expression based access control syntax with @PreAuthorize and @PostAuthorize annotations
         prePostEnabled = true
 )
+
 // provides default security configurations and allows other classes to extend it
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // To authenticate a User or perform various role-based checks, Spring security needs to load users details somehow.
-    final CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
     // We’ll use JWTAuthenticationFilter to implement a filter that -
+    //
     //reads JWT authentication token from the Authorization header of all the requests
     //validates the token
     //loads the user details associated with that token.
     //Sets the user details in Spring Security’s SecurityContext.
     // Spring Security uses the user details to perform authorization checks.
     // We can also access the user details stored in the SecurityContext in our controllers to perform our business logic.
-    private final JwtAuthenticationEntryPoint unauthorizedHandler;
-
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
-        this.customUserDetailsService = customUserDetailsService;
-        this.unauthorizedHandler = unauthorizedHandler;
-    }
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -106,12 +106,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users/**")
+                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
 
-        // Add custom JWT security filter
+        // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }

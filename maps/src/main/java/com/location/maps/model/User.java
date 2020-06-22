@@ -1,12 +1,8 @@
 package com.location.maps.model;
 
 //import com.location.maps.model.audit.DateAudit;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.location.maps.model.audit.DateAudit;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -14,9 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -57,17 +51,6 @@ public class User extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.ALL
-            })
-    @JsonIgnore
-    @JoinTable(name = "user_directions",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "direction_id") })
-    private Set<Direction> directions = new HashSet<>();
-
     public User() {
 
     }
@@ -79,11 +62,6 @@ public class User extends DateAudit {
         this.password = password;
     }
 
-    public User(Long id, String username, String name) {
-        this.id = id;
-        this.username = username;
-        this.name = name;
-    }
     public Long getId() {
         return id;
     }
@@ -130,13 +108,5 @@ public class User extends DateAudit {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public Set<Direction> getDirections() {
-        return directions;
-    }
-
-    public void setDirections(HashSet<Direction> directions) {
-        this.directions = directions;
     }
 }

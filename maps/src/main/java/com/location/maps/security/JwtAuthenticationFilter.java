@@ -1,6 +1,5 @@
 package com.location.maps.security;
 
-import com.location.maps.service.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

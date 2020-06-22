@@ -23,11 +23,11 @@ public abstract class DateAudit implements Serializable {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private transient Instant createdAt;
+    private Instant createdAt;
 
     @LastModifiedDate
     @Column(nullable = false)
-    private transient Instant updatedAt;
+    private Instant updatedAt;
 
     public Instant getCreatedAt() {
         return createdAt;
